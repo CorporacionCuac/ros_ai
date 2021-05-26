@@ -9,10 +9,10 @@ from geometry_msgs.msg import Twist
 class Mapping:
     def __init__(self):
         # publicador
-        self.pub = rospy.Publisher('/turtle1/cmd_vel', Twist, queue_size=10)
+        self.pub = rospy.Publisher("topico_donde_publica", Twist, queue_size=10)
 
         # subscriptor
-        self.sub = rospy.Subscriber("/keys", String, self.callback)
+        self.sub = rospy.Subscriber("topico_al_que_se_suscribe", String, self.callback)
         
 
     def callback(self, msg):
