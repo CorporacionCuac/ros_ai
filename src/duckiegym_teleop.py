@@ -4,12 +4,13 @@ import rospy
 
 from std_msgs.msg import String
 from geometry_msgs.msg import Twist
+from duckiegym_ros.msg import Twist2DStamped
 
 
 class Mapping:
     def __init__(self):
         # publicador
-        self.pub = rospy.Publisher("/turtle1/cmd_vel", Twist, queue_size=10)
+        self.pub_sim = rospy.Publisher("/cuac/lane_controller_node/car_cmd", Twist2DStamped, queue_size=1)
 
         # subscriptor
         self.sub = rospy.Subscriber("/keys", String, self.callback)
@@ -20,30 +21,30 @@ class Mapping:
         # logica de tomar el mensaje y publicar a la tortuga
         key = msg.data
 
-        t = Twist()
+        t = Twist2DStamped()
         if key == 's':
             pass
         elif key == 'w':
-            t.linear.x = 1.0
+            t.v = 0.5
         elif key == 'x':
-            t.linear.x = -1.0
+            t.v = -0.5
         elif key == 'a':
-            t.angular.z = 1.0
+            t.omega = 0.5
         elif key == 'd':
-            t.angular.z = -1.0
+            t.omega = -0.5
         elif key == 'q':
-            t.linear.x = 1.0
-            t.angular.z = 1.0
+            t.v = 0.5
+            t.omega = 0.5
         elif key == 'e':
-            t.linear.x = 1.0
-            t.angular.z = -1.0
+            t.v = 0.5
+            t.omega = -0.5
 
-        self.pub.publish(t)
+        self.pub_sim.publish(t)
 
 
 
 if __name__ == '__main__':
-    rospy.init_node('turtle_teleop')
+    rospy.init_node('duckiegym_teleop')
     rospy.loginfo('Init Mapping')
     try:
         Mapping()

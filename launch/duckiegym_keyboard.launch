@@ -1,0 +1,5 @@
+<launch>
+  <node pkg="duckiegym_ros" type="duckiegym.py" name="duckiegym_node" />
+  <node pkg="keyboard" type="keyboard_input.py" name="keyboard_node" />
+  <node pkg="ros_ai" type="duckiegym_teleop.py" name="teleop_node" />
+</launch>
